@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AxionPro | Gestion RH & Compta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap');
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f1a; scroll-behavior: smooth; color: #cbd5e1; }
+        h1, h2, h3, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to r, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-section { display: none; opacity: 0; }
+        .page-section.active { display: block; opacity: 1; }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f1a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover .service-icon {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* FAQ Accordion Styles */
+        .faq-item { border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+        .faq-item.active .faq-answer { max-height: 200px; padding-bottom: 1.5rem; }
+        .faq-item.active i { transform: rotate(180deg); color: #3b82f6; }
+    </style>
+</head>
+<body class="text-slate-300">
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="fixed w-full bg-[#0b0f1a]/80 backdrop-blur-xl z-50 border-b border-white/5 animate__animated animate__fadeInDown">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer group" onclick="showPage('home')">
+                    <span class="text-2xl font-bold text-white tracking-tighter font-heading uppercase italic">
+                        AXION<span class="text-blue-500 group-hover:text-blue-400 transition">PRO</span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-8">
+                    <div class="hidden md:flex gap-8 items-center text-[10px] font-bold uppercase tracking-[0.2em]">
+                        <a href="#services" class="hover:text-blue-400 transition">Expertise</a>
+                        <a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a>
+                        <a href="#faq" class="hover:text-blue-400 transition">FAQ</a>
+                        <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+                    </div>
+                    <button onclick="handleClientAccess()" class="text-slate-400 hover:text-white transition uppercase text-[10px] font-bold tracking-widest flex items-center gap-3 border border-white/10 px-5 py-2.5 rounded-full bg-white/5">
+                        <i class="fa-solid fa-user-lock text-blue-500"></i> Espace Agent
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECTION : ACCUEIL -->
+    <main id="home-page" class="page-section active">
+        <!-- Hero Section -->
+        <section class="pt-48 pb-24 px-6 relative overflow-hidden">
+            <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-600/10 blur-[150px] -z-10"></div>
+            <div class="max-w-7xl mx-auto text-center md:text-left">
+                <div class="max-w-4xl animate__animated animate__fadeInUp">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-8">
+                        Partenaire des collectifs numériques
+                    </div>
+                    <h1 class="text-5xl md:text-8xl font-bold text-white leading-[1.1] mb-8">
+                        La gestion pro accessible</span>.
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed mb-10 max-w-2xl mx-auto md:mx-0">
+                        Audit gratuit et accompagnement sur-mesure pour la structuration RH, la comptabilité et la paie de vos projets.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-5">
+                        <a href="#contact" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition shadow-xl shadow-blue-600/20">Ouvrir un ticket</a>
+                        <a href="#services" class="px-8 py-4 glass-card text-white rounded-2xl font-bold hover:bg-white/5 transition border-white/10">Découvrir l'expertise</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION SERVICES -->
+        <section id="services" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <div class="text-blue-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Nos Domaines</div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white font-heading italic">Expertises Métiers</span></h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass-card p-10 rounded-[2.5rem] animate__animated animate__fadeInLeft">
+                        <div class="service-icon"><i class="fa-solid fa-users-gear"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-4">RH & Recrutement</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Accompagnement dans la sélection de vos futurs collaborateurs et mise en place des contrats adaptés.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-[2.5rem] animate__animated animate__fadeInUp">
+                        <div class="service-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-4">Paie & Social</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Établissement des bulletins de salaire et déclarations sociales en totale conformité.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-[2.5rem] animate__animated animate__fadeInRight">
+                        <div class="service-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-4">Audit & Compta</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Analyse de vos flux financiers et tenue de votre comptabilité pour une vision claire.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION TARIFS -->
+        <section id="tarifs" class="py-32 px-6 border-t border-white/5">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass-card p-12 md:p-20 rounded-[3rem] border-white/10 text-center relative overflow-hidden animate__animated animate__zoomIn">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[100px] -z-10"></div>
+                    <div class="text-blue-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">Investissement & Transparence</div>
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 font-heading italic tracking-tighter uppercase">TARIF sur demande</span></h2>
+                    <p class="text-slate-400 italic max-w-2xl mx-auto mb-12">Chaque projet est unique. Nous analysons vos besoins gratuitement pour proposer un prix juste.</p>
+                    <div class="grid md:grid-cols-3 gap-6 text-left max-w-4xl mx-auto mb-12">
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/5">
+                            <i class="fa-solid fa-hand-holding-dollar text-blue-500 mb-4 text-2xl"></i>
+                            <h4 class="text-white font-bold mb-2">Transparence</h4>
+                            <p class="text-xs text-slate-500 italic">Détails complets fournis dès le premier devis.</p>
+                        </div>
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/5">
+                            <i class="fa-solid fa-magnifying-glass-chart text-blue-500 mb-4 text-2xl"></i>
+                            <h4 class="text-white font-bold mb-2">Audit Inclus</h4>
+                            <p class="text-xs text-slate-500 italic">Évaluation initiale gratuite de votre structure.</p>
+                        </div>
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/5">
+                            <i class="fa-solid fa-bolt text-blue-500 mb-4 text-2xl"></i>
+                            <h4 class="text-white font-bold mb-2">Réactivité</h4>
+                            <p class="text-xs text-slate-500 italic">Une réponse garantie sous 24h ouvrées.</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="inline-block px-12 py-5 bg-white text-black font-bold rounded-2xl hover:bg-blue-600 hover:text-white transition">Obtenir mon devis</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION FAQ -->
+        <section id="faq" class="py-32 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="text-blue-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Aide & Support</div>
+                    <h2 class="text-4xl font-bold text-white font-heading italic">Questions Fréquentes</span></h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="faq-item glass-card rounded-2xl px-8" onclick="toggleFAQ(this)">
+                        <button class="w-full flex justify-between items-center py-6 text-left">
+                            <span class="font-bold text-white">Quels types de structures accompagnez-vous ?</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="text-slate-500 text-sm leading-relaxed">Nous travaillons principalement avec des collectifs numériques (sur discord)</p>
+                        </div>
+                    </div>
+                    <div class="faq-item glass-card rounded-2xl px-8" onclick="toggleFAQ(this)">
+                        <button class="w-full flex justify-between items-center py-6 text-left">
+                            <span class="font-bold text-white">Comment se passe l'audit gratuit ?</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="text-slate-500 text-sm leading-relaxed">Nous organisons un appel de 30 minutes pour analyser vos flux RH et financiers actuels. Nous vous remettons ensuite un rapport d'optimisation sans engagement. De plus, nous pouvons aussi discuter via messages privés si nos disponibilités respectifs ne conviennent pas avant un moment. </p>
+                        </div>
+                    </div>
+                    <div class="faq-item glass-card rounded-2xl px-8" onclick="toggleFAQ(this)">
+                        <button class="w-full flex justify-between items-center py-6 text-left">
+                            <span class="font-bold text-white">Quels sont vos délais de réponse ?</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p class="text-slate-500 text-sm leading-relaxed">Pour chaque ticket ouvert sur notre plateforme, nous garantissons une prise en charge sous 24h hors périodes de fêtes et fermeture exceptionelle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION CONTACT -->
+        <section id="contact" class="py-32 bg-blue-600/5 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-white mb-4 font-heading italic tracking-tight">Soumettre un Projet</h2>
+                    <p class="text-slate-500 italic">Décrivez-nous votre besoin ci-dessous.</p>
+                </div>
+                <div class="glass-card p-12 rounded-[2.5rem]">
+                    <form id="ticketForm" class="space-y-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Discord / Structure</label>
+                                <input name="client_name" type="text" placeholder="Ex: mo.ontop" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white outline-none focus:border-blue-500 transition" required>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Service</label>
+                                <select name="service_type" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white outline-none focus:border-blue-500 transition">
+                                    <option value="Devis Complet">Devis Complet</option>
+                                    <option value="RH & Paie">RH & Paie</option>
+                                    <option value="Audit">Audit Structurel</option>
+                                    <option value="Comptabilité">Comptabilité</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Description</label>
+                            <textarea name="message" rows="5" placeholder="Parlez-nous de votre projet..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white outline-none focus:border-blue-500 transition resize-none" required></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn" class="w-full py-6 bg-white text-black font-bold rounded-2xl hover:bg-blue-600 hover:text-white transition shadow-xl">Envoyer le ticket</button>
+                    </form>
+                    <div id="successMsg" class="hidden text-center py-10 animate__animated animate__zoomIn">
+                        <div class="w-20 h-20 bg-blue-500/20 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl border border-blue-500/30">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 italic">Message envoyé</h3>
+                        <p class="text-slate-500 text-sm">Nous traiterons votre demande sous 24h.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SECTION : LOGIN -->
+    <main id="login-page" class="page-section pt-48 px-6">
+        <div class="max-w-md mx-auto animate__animated animate__fadeInDown">
+            <div class="glass-card p-12 rounded-[2.5rem]">
+                <h2 class="text-center text-white font-bold mb-8 font-heading italic uppercase tracking-widest text-xl">Accès Agent</h2>
+                <form id="loginForm" class="space-y-4">
+                    <input type="text" id="loginUser" placeholder="Utilisateur" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none focus:border-blue-500" required>
+                    <input type="password" id="loginPass" placeholder="Mot de passe" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none focus:border-blue-500" required>
+                    <button type="submit" id="loginBtn" class="w-full py-5 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-500 transition shadow-lg shadow-blue-600/20 uppercase tracking-widest text-xs">Connexion</button>
+                </form>
+                <button onclick="showPage('home')" class="w-full mt-6 text-[10px] text-slate-600 uppercase font-bold tracking-widest">Retour au site</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECTION : DASHBOARD ADMIN -->
+    <main id="admin-page" class="page-section pt-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 animate__animated animate__fadeIn">
+                <div>
+                    <div class="text-blue-500 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">Espace Gestion</div>
+                    <h2 class="text-white text-5xl font-bold font-heading italic tracking-tighter">Tickets <span class="text-gradient uppercase">Entrants</span></h2>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="loadTickets()" class="p-4 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                    <button onclick="logout()" class="px-8 py-4 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-red-500 hover:text-white transition">Quitter</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                <div class="glass-card p-6 rounded-3xl animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                    <div class="text-slate-500 text-[10px] uppercase font-bold mb-1">Total Tickets</div>
+                    <div id="stat-total" class="text-3xl font-bold text-white font-heading italic">0</div>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border-yellow-500/20 animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                    <div class="text-yellow-500 text-[10px] uppercase font-bold mb-1">En attente</div>
+                    <div id="stat-pending" class="text-3xl font-bold text-white font-heading italic">0</div>
+                </div>
+            </div>
+<main id="mentions-page" class="page-section pt-48 pb-24 px-6">
+    <div class="max-w-4xl mx-auto">
+        <button onclick="showPage('home')" class="mb-10 text-blue-500 hover:text-white transition flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
+            <i class="fa-solid fa-arrow-left"></i> Retour au site
+        </button>
+        
+        <div class="glass-card p-12 rounded-[2.5rem] prose prose-invert max-w-none">
+            <h2 class="text-4xl font-bold text-white mb-8 font-heading italic">Mentions <span class="text-blue-500">Légales</span></h2>
+            
+            <div class="space-y-8 text-sm text-slate-400 leading-relaxed">
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-wider mb-3 text-lg">1. Édition du site</h3>
+                    <p>Le présent site est édité par <strong>AxionPro</strong>, dont le siège social est situé en France. <br>
+                    Responsable de la publication : [Votre Nom/Pseudo].</p>
+                </section>
+
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-wider mb-3 text-lg">2. Hébergement</h3>
+                    <p>Le site est hébergé par : [Nom de l'hébergeur (ex: Hostinger, OVH, PlanetHoster)]<br>
+                    Adresse de l'hébergeur : [Adresse de l'hébergeur]<br>
+                    Site Web : https://www.alexia.fr/fiche/7785/l-hebergeur.htm</p>
+                </section>
+
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-wider mb-3 text-lg">3. Propriété intellectuelle</h3>
+                    <p>L'ensemble des éléments graphiques, la structure du site et les contenus (textes, logos, icônes) sont la propriété exclusive d'AxionPro. Toute reproduction, représentation, modification ou adaptation totale ou partielle est interdite sans accord préalable.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-wider mb-3 text-lg">4. Protection des données (RGPD)</h3>
+                    <p>Les informations collectées via le formulaire de ticket (nom de structure, service demandé, message) sont utilisées exclusivement pour le traitement de votre demande. Conformément au RGPD, vous disposez d'un droit d'accès et de suppression de vos données en nous contactant directement.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-white font-bold uppercase tracking-wider mb-3 text-lg">5. Limitation de responsabilité</h3>
+                    <p>AxionPro s'efforce d'assurer l'exactitude des informations diffusées, mais ne saurait être tenu responsable des erreurs ou omissions. L'utilisation du site se fait sous la responsabilité de l'utilisateur.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+            <div class="glass-card rounded-[2.5rem] overflow-hidden animate__animated animate__fadeInUp">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-white/5 text-[10px] uppercase font-bold text-slate-500 border-b border-white/5">
+                            <tr>
+                                <th class="p-8">Date</th>
+                                <th class="p-8">Client</th>
+                                <th class="p-8">Service</th>
+                                <th class="p-8">Message</th>
+                                <th class="p-8">Statut</th>
+                                <th class="p-8">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tickets-list" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+                <div id="loader-admin" class="p-32 text-center">
+                    <div class="animate-spin text-blue-500 text-4xl mb-6"><i class="fa-solid fa-circle-notch"></i></div>
+                    <p class="text-slate-500 italic">Accès sécurisé en cours...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // NAVIGATION
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            const nav = document.getElementById('main-nav');
+            if(pageId === 'admin') {
+                nav.classList.add('hidden');
+                loadTickets();
+            } else {
+                nav.classList.remove('hidden');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // FAQ Toggle Logic
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if(!isActive) element.classList.add('active');
+        }
+
+        function handleClientAccess() { showPage('login'); }
+        function logout() { showPage('home'); }
+
+        // TICKET SUBMISSION
+        document.getElementById('ticketForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Transmission...";
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            fetch('submit_ticket.php', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    document.getElementById('ticketForm').classList.add('hidden');
+                    document.getElementById('successMsg').classList.remove('hidden');
+                } else {
+                    alert("Erreur : " + data.message);
+                    btn.innerText = "Envoyer le ticket";
+                    btn.disabled = false;
+                }
+            });
+        });
+
+        // AGENT LOGIN
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.innerText = "Vérification...";
+            
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+
+            const formData = new FormData();
+            formData.append('username', user);
+            formData.append('password', pass);
+
+            fetch('login_agent.php', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') showPage('admin');
+                else {
+                    alert("Accès refusé : " + data.message);
+                    btn.innerText = "Connexion";
+                }
+            });
+        });
+
+        // ADMIN TICKETS LOADING
+        function loadTickets() {
+            const list = document.getElementById('tickets-list');
+            const loader = document.getElementById('loader-admin');
+            loader.classList.remove('hidden');
+            list.innerHTML = "";
+
+            fetch('get_tickets.php')
+            .then(res => res.json())
+            .then(data => {
+                loader.classList.add('hidden');
+                if(!data || data.length === 0) {
+                    list.innerHTML = "<tr><td colspan='6' class='p-20 text-center text-slate-600 italic'>Aucune demande enregistrée.</td></tr>";
+                    updateStats(0, 0);
+                    return;
+                }
+
+                let pendingCount = 0;
+                data.forEach(t => {
+                    if(t.status === 'en_attente') pendingCount++;
+                    const date = new Date(t.created_at).toLocaleString('fr-FR', {day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'});
+                    list.innerHTML += `
+                        <tr class="hover:bg-white/[0.02] transition group animate__animated animate__fadeIn">
+                            <td class="p-8 text-xs text-slate-500">${date}</td>
+                            <td class="p-8 font-bold text-white">${t.client_name}</td>
+                            <td class="p-8"><span class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full uppercase font-bold">${t.service_type}</span></td>
+                            <td class="p-8 text-xs text-slate-400 max-w-sm"><div class="line-clamp-2">${t.message}</div></td>
+                            <td class="p-8">
+                                <span class="status-badge ${t.status === 'en_attente' ? 'bg-yellow-500/10 text-yellow-500' : 'bg-green-500/10 text-green-500'}">
+                                    ${t.status.replace('_', ' ')}
+                                </span>
+                            </td>
+                            <td class="p-8">
+                                <button onclick="updateStatus(${t.id}, 'traite')" class="text-blue-500 hover:text-white transition text-sm">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                updateStats(data.length, pendingCount);
+            });
+        }
+
+        function updateStats(total, pending) {
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-pending').innerText = pending;
+        }
+
+        function updateStatus(id, status) {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('status', status);
+            fetch('update_ticket.php', { method: 'POST', body: formData }).then(() => loadTickets());
+        }
+    </script>
+    <footer class="py-12 border-t border-white/5 bg-[#0b0f1a]">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+            © 2026 AXIONPRO - Tous droits réservés
+        </div>
+        <div class="flex gap-8">
+            <button onclick="showPage('mentions')" class="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-blue-400 transition"> Mentions Légales </button>
+            <a href="#" class="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-blue-400 transition"> Politique de Confidentialité </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
