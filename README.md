@@ -5,47 +5,43 @@
 
 ---
 
-## 🌟 Points Forts du Projet
-- **Interface Glassmorphism :** UI moderne conçue avec **Tailwind CSS** et **Animate.css** pour une expérience utilisateur fluide.
-- **Système de Ticketing :** Formulaire client dynamique avec traitement asynchrone (Fetch API).
-- **Espace Agent Sécurisé :** Dashboard d'administration protégé par authentification pour la gestion des demandes.
-- **Architecture Hybride :** Utilisation de PHP pour l'API backend et de JavaScript pour le rendu dynamique (Single Page App approach).
+## 📂 Organisation Technique
+Le projet est structuré pour séparer la logique de présentation de la gestion des données :
+- **`index.html`** : Interface Single Page Application (SPA) utilisant Tailwind CSS et JavaScript pour une navigation fluide sans rechargement.
+- **`api.php`** : Contrôleur central gérant l'authentification des agents, la création et la suppression de tickets.
+- **`config.php`** : Configuration de la connexion à la base de données via PDO pour assurer la sécurité des transactions.
+- **`get_tickets.php`** : Service dédié à la récupération asynchrone des données pour le dashboard admin.
 
 ---
 
-## 📁 Structure Technique
-
-### 🎨 Front-End (`index.html`)
-- **Framework :** Tailwind CSS pour un design responsive et sombre.
-- **Navigation :** Système de "Single Page Application" (SPA) géré par JavaScript (`showPage`).
-- **Composants :** FAQ interactive, formulaires de contact, et dashboard de statistiques.
-
-### ⚙️ Back-End & API (`api.php`, `get_tickets.php`)
-- **Langage :** PHP 8.x.
-- **Sécurité :** Utilisation de **PDO** avec requêtes préparées pour bloquer les injections SQL.
-- **Authentification :** Gestion des sessions sécurisées pour l'accès agent (`session_start`).
-- **Format de données :** Échanges entièrement en **JSON** pour une communication fluide entre le front et le back.
-
-### 🗄️ Base de Données (`config.php`)
-- Connexion centralisée via PDO.
-- Gestion des tickets : Stockage du nom client, type de service, message, statut (`en_attente`, `traite`) et timestamps.
+## 🛠️ Stack Technique
+- **Front-end :** HTML5, Tailwind CSS, FontAwesome, Animate.css.
+- **Back-end :** PHP 8.x avec gestion de sessions sécurisées.
+- **Base de données :** MySQL / MariaDB avec requêtes préparées (Protection SQLi).
+- **Communication :** Fetch API et format d'échange JSON.
 
 ---
 
-## 🔧 Installation (Côté Admin/Ops)
+## ⚙️ Installation (Admin/Ops)
+1. **Base de données :** Créer une base nommée `axionpro` et importer le schéma SQL.
+2. **Configuration :** Éditer `config.php` pour renseigner vos accès MySQL.
+3. **Sécurité :** L'accès au dashboard nécessite une authentification via `api.php`.
 
-1. **Préparation du serveur :**
-   - Serveur Apache avec module PHP activé.
-   - Base de données MySQL.
+---
 
-2. **Configuration de la Base :**
-   - Créer une base nommée `axionpro`.
-   - Importer les tables nécessaires (Tickets & Users).
+## ⚖️ Licence
 
-3. **Liaison BDD :**
-   Modifier `config.php` avec vos accès locaux ou distants :
-   ```php
-   $host = 'localhost';
-   $dbname = 'axionpro';
-   $username = 'votre_user';
-   $password = 'votre_mdp';
+Ce projet est sous licence **MIT**.
+
+**En résumé :**
+- ✅ Utilisation commerciale autorisée.
+- ✅ Modification et distribution autorisées.
+- ✅ Utilisation privée autorisée.
+- ⚠️ La seule condition est d'inclure le nom de l'auteur original et la notice de licence dans toute copie du logiciel.
+
+---
+
+## 👤 Auteur
+**[Ton Nom / Pseudo]**
+*Développeur & Admin Système*
+> "Concevoir pour l'utilisateur, sécuriser pour l'infrastructure."
